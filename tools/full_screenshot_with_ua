@@ -1,0 +1,3 @@
+#!/bin/bash
+
+env node tools/fullScreenshot_with_ua.js "$@"
