@@ -58,13 +58,15 @@ if (typeof process.argv[5] === 'string') {
     console.log("Setting custom UA: " + ua)
 }
 
-var isMobile = false;
+var isMobile = true;
 
-let filename = `full_screenshot_${width}_${height}.png`;
+let filename = "urlshot.png";
 
 (async() => {
 
     const browser = await puppeteer.launch({
+        dumpio: true,
+        headless: true,
         args: [
         '--no-sandbox',
         '--disable-setuid-sandbox'
@@ -83,11 +85,11 @@ let filename = `full_screenshot_${width}_${height}.png`;
         page.setUserAgent(ua);
     }
 
-    await page.goto(url, {waitUntil: 'networkidle2'});
+    await page.goto(url, {waitUntil: 'networkidle0', timeout: 30000});
 
     await sleep(delay);
 
-    await page.screenshot({path: `screenshots/${filename}`, fullPage: true});
+    await page.screenshot({path: `/screenshots/${filename}`, fullPage: false});
 
     browser.close();
 
