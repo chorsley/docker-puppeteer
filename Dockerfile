@@ -19,7 +19,7 @@ ENV PATH="/tools:${PATH}"
 
 ADD ./tools /tools
 
-RUN chmod +x /tools/* && mkdir /screenshots
+RUN /bin/bash -c 'chmod +x /tools/* && mkdir /screenshots && chmod 770 /screenshots'
 
 WORKDIR /app
 
@@ -31,6 +31,7 @@ RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
     && chown -R pptruser:pptruser /screenshots \
     && chown -R pptruser:pptruser /app \
     && chown -R pptruser:pptruser /tools
+
 
 # Run everything after as non-privileged user.
 USER pptruser
