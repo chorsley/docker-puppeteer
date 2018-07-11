@@ -19,7 +19,7 @@ ENV PATH="/tools:${PATH}"
 
 ADD ./tools /tools
 
-RUN /bin/bash -c 'chmod +x /tools/* && mkdir /screenshots && chmod 770 /screenshots'
+RUN /bin/bash -c 'chmod +x /tools/* && mkdir /screenshots && chmod 777 /screenshots'
 
 WORKDIR /app
 
