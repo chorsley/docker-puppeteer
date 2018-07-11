@@ -65,8 +65,9 @@ let filename = "urlshot.png";
 (async() => {
 
     const browser = await puppeteer.launch({
-        dumpio: true,
+        //dumpio: true,
         headless: true,
+        ignoreHTTPSErrors: true,
         args: [
         '--no-sandbox',
         '--disable-setuid-sandbox'
@@ -85,10 +86,14 @@ let filename = "urlshot.png";
         page.setUserAgent(ua);
     }
 
-    await page.goto(url, {waitUntil: 'networkidle0', timeout: 30000});
+    //await page.goto(url, {waitUntil: 'networkidle0', timeout: 30000});
+    await page.goto(url, { waitUntil: ['domcontentloaded'], timeout: 30000 }).catch((err) => {
+          console.log(err);
+    });
 
     await sleep(delay);
 
+    //await Promise.race([page.screenshot({path: `/screenshots/${filename}`, fullPage: false}), new Promise((resolve, reject) => setTimeout(reject, 10000))]);
     await page.screenshot({path: `/screenshots/${filename}`, fullPage: false});
 
     browser.close();
