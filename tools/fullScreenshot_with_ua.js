@@ -43,7 +43,7 @@ if (typeof process.argv[3] === 'string') {
 }
 console.log(process.argv[3]);
 
-var delay = 0;
+var delay = 5000;
 
 if (typeof process.argv[4] === 'string') {
     delay = parseInt(process.argv[4], 10);
@@ -58,7 +58,7 @@ if (typeof process.argv[5] === 'string') {
     console.log("Setting custom UA: " + ua)
 }
 
-var isMobile = true;
+var isMobile = false;
 
 let filename = "urlshot.png";
 
@@ -87,7 +87,7 @@ let filename = "urlshot.png";
     }
 
     //await page.goto(url, {waitUntil: 'networkidle0', timeout: 30000});
-    await page.goto(url, { waitUntil: ['domcontentloaded'], timeout: 30000 }).catch((err) => {
+    await page.goto(url, { waitUntil: ['domcontentloaded', 'load', 'networkidle0'], timeout: 30000 }).catch((err) => {
           console.log(err);
     });
 
