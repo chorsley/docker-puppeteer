@@ -70,7 +70,11 @@ let filename = "urlshot.png";
         ignoreHTTPSErrors: true,
         args: [
         '--no-sandbox',
-        '--disable-setuid-sandbox'
+        '--disable-setuid-sandbox',
+        // --proxy* lines workaround for puppeteer slow speed issues, as per
+        // https://github.com/GoogleChrome/puppeteer/issues/1718#issuecomment-397532083
+        "--proxy-server='direct://'",
+        '--proxy-bypass-list=*'
         ]
     });
 
@@ -87,7 +91,7 @@ let filename = "urlshot.png";
     }
 
     //await page.goto(url, {waitUntil: 'networkidle0', timeout: 30000});
-    await page.goto(url, { waitUntil: ['domcontentloaded', 'load', 'networkidle0'], timeout: 30000 }).catch((err) => {
+    await page.goto(url, { waitUntil: ['domcontentloaded', 'load', 'networkidle0'], timeout: 15000 }).catch((err) => {
           console.log(err);
     });
 
