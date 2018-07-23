@@ -43,7 +43,7 @@ if (typeof process.argv[3] === 'string') {
 }
 console.log(process.argv[3]);
 
-var delay = 5000;
+var delay = 2000;
 
 if (typeof process.argv[4] === 'string') {
     delay = parseInt(process.argv[4], 10);
@@ -90,12 +90,11 @@ let filename = "urlshot.png";
         page.setUserAgent(ua);
     }
 
-    //await page.goto(url, {waitUntil: 'networkidle0', timeout: 30000});
-    await page.goto(url, { waitUntil: ['domcontentloaded', 'load', 'networkidle0'], timeout: 15000 }).catch((err) => {
+    await page.goto(url, { waitUntil: ['domcontentloaded', 'load', 'networkidle0'], timeout: delay + 5000 }).catch((err) => {
           console.log(err);
     });
 
-    await sleep(delay);
+    //await sleep(delay);
 
     //await Promise.race([page.screenshot({path: `/screenshots/${filename}`, fullPage: false}), new Promise((resolve, reject) => setTimeout(reject, 10000))]);
     await page.screenshot({path: `/screenshots/${filename}`, fullPage: false});
