@@ -90,6 +90,19 @@ let filename = "urlshot.png";
         page.setUserAgent(ua);
     }
 
+    // disable blinking cursor for pages that auto-focus. That creates small
+    // visual differences that messes up our screenshot diffs.
+    const styleContent = `
+        input {
+           color: transparent;
+           text-shadow: 0 0 0 black;
+        }
+        input:focus {
+            outline: none;
+        }
+    `;
+    await page.addStyleTag({ content: styleContent });
+
     await page.goto(url, { waitUntil: ['domcontentloaded', 'load', 'networkidle0'], timeout: delay + 5000 }).catch((err) => {
           console.log(err);
     });
